@@ -78,24 +78,32 @@ on:
           - staging
           - production
 
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Show environment
+#         run: |
+#           echo "Deploying to ${{ inputs.environment }}"
+
+#       - name: Install dependencies
+#         run: npm install
+
+#       - name: Run tests
+#         run: npm test
+
+#       - name: Deploy
+#         run: |
+#           echo "Deploying application to ${{ inputs.environment }}"
+
 jobs:
-  deploy:
+  greet:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Show environment
-        run: |
-          echo "Deploying to ${{ inputs.environment }}"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
-
-      - name: Deploy
-        run: |
-          echo "Deploying application to ${{ inputs.environment }}"
+      - name: Send greeting
+        run: echo "Hello ${{ inputs.name }}"
