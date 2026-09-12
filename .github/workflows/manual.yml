@@ -35,7 +35,12 @@
 
 name: Manual workflow
 
+
 on:
+  push:
+    branches:
+      - main
+
   workflow_dispatch:
     inputs:
       name:
@@ -51,4 +56,3 @@ jobs:
     steps:
       - name: Send greeting
         run: echo "Hello ${{ inputs.name }}"
-        
