@@ -60,23 +60,7 @@
 
 #########################
 
-name: Deploy Application
 
-on:
-  push:
-    branches:
-      - main
-
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: "Select environment"
-        required: true
-        type: choice
-        options:
-          - development
-          - staging
-          - production
 
 # jobs:
 #   deploy:
@@ -100,10 +84,33 @@ on:
 #         run: |
 #           echo "Deploying application to ${{ inputs.environment }}"
 
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select environment"
+        required: true
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+
 jobs:
-  greet:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send greeting
-        run: echo "Hello ${{ inputs.name }}"
+      - name: Show selected environment
+        run: |
+          echo "Selected environment: ${{ inputs.environment }}"
+
+      - name: Deploy
+        run: |
+          echo "Deploying to ${{ inputs.environment }}"
