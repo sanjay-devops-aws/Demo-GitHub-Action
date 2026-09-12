@@ -33,8 +33,34 @@
 
 ##################################
 
-name: Manual workflow
+# name: Manual workflow
 
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+#   workflow_dispatch:
+#     inputs:
+#       name:
+#         description: "Person to greet"
+#         required: true
+#         default: "World"
+#         type: string
+
+# jobs:
+#   greet:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Send greeting
+#         run: echo "Hello ${{ inputs.name }}"
+
+
+#########################
+
+name: Deploy Application
 
 on:
   push:
@@ -43,16 +69,33 @@ on:
 
   workflow_dispatch:
     inputs:
-      name:
-        description: "Person to greet"
+      environment:
+        description: "Select environment"
         required: true
-        default: "World"
-        type: string
+        type: choice
+        options:
+          - development
+          - staging
+          - production
 
 jobs:
-  greet:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send greeting
-        run: echo "Hello ${{ inputs.name }}"
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show environment
+        run: |
+          echo "Deploying to ${{ inputs.environment }}"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Deploy
+        run: |
+          echo "Deploying application to ${{ inputs.environment }}"
